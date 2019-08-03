@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/oauth/add" method="post">
+        <div>Application name</div>
+        <input type="text" name="oauth_application_name" placeholder="">
+        <br>
+        <div>Homepage URL</div>
+        <input type="text" name="oauth_application_url" placeholder="">
+        <br>
+        <div>Application description</div>
+        <input type="text" name="oauth_application_description" placeholder="">
+        <br>
+        <div>Authorization callback URL</div>
+        <input type="text" name="oauth_application_callback_url" placeholder="">
+        <br>
+        <button type="submit">Register application</button>
+    </form>
+</body>
+</html>
