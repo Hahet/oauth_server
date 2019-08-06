@@ -1,5 +1,6 @@
 from urllib.parse import unquote_plus
 
+
 from flask import (
     render_template,
     current_app,
@@ -7,13 +8,18 @@ from flask import (
     redirect,
     request,
     url_for,
+    jsonify
 )
 
 from models.session import Session
+from models.token import Token
+from models.user import User
+
 from routes import (
     current_user,
     random_string,
-    login_required
+    login_required,
+    oauth_required
 )
 
 from utils import log
@@ -55,7 +61,6 @@ def login_view():
     u = current_user()
     result = request.args.get('result', '')
     result = unquote_plus(result)
-
     return render_template(
         'login.html',
         username=u.username,
@@ -90,3 +95,20 @@ def register_view():
 def profile_view():
     u = current_user()
     return render_template('profile.html', username=u.username)
+
+
+@user.route('/user/info', methods=['GET'])
+# @login_required
+@oauth_required
+def user_info(user):
+    # print('request', request)
+    # authorization = request.headers.get('Authorization')
+    # access_token = authorization[6:]
+    # token = Token.find_by(access_token=access_token)
+    # user_id = token.user_id
+    # user = User.find_by(id=user_id)
+    r = {
+        'name': user.username,
+    }
+    r = jsonify(r)
+    return r

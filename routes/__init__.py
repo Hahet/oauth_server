@@ -13,6 +13,8 @@ from jinja2 import (
 
 from models.session import Session
 from models.user import User
+from models.oauth import Oauth
+from models.token import Token
 from utils import log
 
 import random
@@ -62,5 +64,29 @@ def login_required(route_function):
         else:
             log('登录用户', route_function)
             return route_function()
+
+    return f
+
+
+def oauth_required(route_function):
+    """
+    这个函数看起来非常绕，所以你不懂也没关系
+    就直接拿来复制粘贴就好了
+    """
+
+    @functools.wraps(route_function)
+    def f():
+        log('oauth_required')
+        authorization = request.headers.get('Authorization')
+        access_token = authorization[6:]
+        token = Token.find_by(access_token=access_token)
+        user_id = token.user_id
+        user = User.find_by(id=user_id)
+        if user == None:
+            log('未授权')
+            return redirect(url_for('user.login_view'))
+        else:
+            log('已授权用户', route_function)
+            return route_function(user)
 
     return f

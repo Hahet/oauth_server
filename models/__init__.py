@@ -97,8 +97,8 @@ class Model(object):
     @classmethod
     def find_by(cls, **kwargs):
         log('find_by kwargs', kwargs)
-
-        for m in cls.all():
+        all = cls.all()
+        for m in all:
             exist = True
             for k, v in kwargs.items():
                 if not hasattr(m, k) or not getattr(m, k) == v:
@@ -114,7 +114,8 @@ class Model(object):
         for m in cls.all():
             exist = True
             for k, v in kwargs.items():
-                log('for loop in find all', m, k, v, hasattr(m, k), getattr(m, k), getattr(m, k) == v)
+                log('for loop in find all', m, k, v, hasattr(
+                    m, k), getattr(m, k), getattr(m, k) == v)
                 if not hasattr(m, k) or not getattr(m, k) == v:
                     exist = False
             if exist:
@@ -161,7 +162,8 @@ class Model(object):
         不明白就看书或者 搜
         """
         classname = self.__class__.__name__
-        properties = ['{}: ({})'.format(k, v) for k, v in self.__dict__.items()]
+        properties = ['{}: ({})'.format(k, v)
+                      for k, v in self.__dict__.items()]
         s = '\n'.join(properties)
         return '< {}\n{} >\n'.format(classname, s)
 

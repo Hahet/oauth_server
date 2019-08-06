@@ -13,7 +13,7 @@ class Session(Model):
         super().__init__(form)
         self.session_id = form.get('session_id', '')
         self.user_id = form.get('user_id', -1)
-        self.expired_time = form.get('expired_time', time.time() + 3600)
+        self.expired_time = form.get('expired_time', time.time() + 36000)
 
     def expired(self):
         now = time.time()
